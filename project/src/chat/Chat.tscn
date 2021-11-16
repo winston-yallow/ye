@@ -1,0 +1,139 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://src/chat/Chat.gd" type="Script" id=1]
+[ext_resource path="res://src/messages/Scroller.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/user_input/UserInput.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/theme/text_eyecacher.tres" type="DynamicFont" id=4]
+[ext_resource path="res://src/chat/particle.png" type="Texture" id=5]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.85098, 0.176471, 0.423529, 1 )
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0, 0.0124224, 0.534162, 1 )
+colors = PoolColorArray( 1, 1, 1, 0, 0.85098, 0.176471, 0.423529, 1, 0.85098, 0.176471, 0.423529, 1, 0.85098, 0.176471, 0.423529, 0 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=2]
+emission_shape = 2
+emission_box_extents = Vector3( 50, 20, 0 )
+emission_ring_axis = Vector3( 0, 0, 0 )
+flag_disable_z = true
+direction = Vector3( 0, 0, 0 )
+spread = 180.0
+gravity = Vector3( 0, 150, 0 )
+initial_velocity = 150.0
+initial_velocity_random = 0.13
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+angle = 254.1
+angle_random = 1.0
+scale = 0.5
+color_ramp = SubResource( 4 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+emission_shape = 2
+emission_box_extents = Vector3( 50, 20, 0 )
+emission_ring_axis = Vector3( 0, 0, 0 )
+flag_disable_z = true
+direction = Vector3( 0, 0, 0 )
+spread = 180.0
+gravity = Vector3( 0, 150, 0 )
+initial_velocity = 150.0
+initial_velocity_random = 0.13
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+angle = 254.1
+angle_random = 1.0
+color_ramp = SubResource( 4 )
+hue_variation = 0.25
+hue_variation_random = 0.65
+
+[node name="Chat" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 8
+custom_constants/margin_top = 8
+custom_constants/margin_left = 8
+custom_constants/margin_bottom = 16
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Main" type="Control" parent="."]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 1016.0
+margin_bottom = 584.0
+
+[node name="VBox" type="VBoxContainer" parent="Main"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 8
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Scroller" parent="Main/VBox" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 1008.0
+margin_bottom = 526.0
+
+[node name="UserInput" parent="Main/VBox" instance=ExtResource( 3 )]
+margin_left = 0.0
+margin_top = 534.0
+margin_right = 1008.0
+margin_bottom = 576.0
+
+[node name="InfoPanel" type="Panel" parent="Main"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -148.0
+margin_top = 20.0
+margin_right = -20.0
+margin_bottom = 56.0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FxSmall" type="Particles2D" parent="Main/InfoPanel"]
+position = Vector2( 64, 18 )
+emitting = false
+amount = 16
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.9
+process_material = SubResource( 2 )
+texture = ExtResource( 5 )
+
+[node name="FxBig" type="Particles2D" parent="Main/InfoPanel"]
+position = Vector2( 64, 18 )
+emitting = false
+amount = 32
+one_shot = true
+explosiveness = 0.84
+process_material = SubResource( 5 )
+texture = ExtResource( 5 )
+
+[node name="Score" type="Label" parent="Main/InfoPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 4 )
+text = "0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
